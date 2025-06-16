@@ -119,20 +119,19 @@
     }
 
     .menu-items div {
-  width: 250px;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+      width: 250px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.menu-items div:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-}
-
+    .menu-items div:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
 
     .menu-items img {
       width: 100%;
@@ -189,24 +188,92 @@
       padding: 1rem;
     }
 
+    /* Seção Avaliações - Carrossel */
+    #avaliacoes {
+      background-color: #fff8e1;
+      padding: 4rem 2rem;
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+     
+    }
+
+    #avaliacoes h2 {
+      margin-bottom: 2rem;
+    }
+
+    .carousel {
+      position: relative;
+      height: 160px;
+    }
+
+    .avaliacao {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      font-style: italic;
+      color: #555;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 160px;
+      box-sizing: border-box;
+    }
+
+    .avaliacao.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    .avaliacao strong {
+      margin-top: 1rem;
+      color: #2c3e50;
+      font-style: normal;
+      align-self: flex-end;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      padding: 0.3rem 0.9rem;
+      border-radius: 50%;
+      z-index: 10;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+
+    .carousel-btn:hover {
+      background-color: #34495e;
+    }
+
+    .carousel-btn.left {
+      left: -10px;
+    }
+
+    .carousel-btn.right {
+      right: -10px;
+    }
+
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
+      #avaliacoes {
+        max-width: 90vw;
+        height: auto;
       }
+    }
 
-      nav {
-        justify-content: flex-start;
-      }
-
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .logo {
-        font-size: 1.2rem;
-      }
-}
   </style>
 </head>
 <body>
@@ -257,6 +324,31 @@
     </div>
   </section>
 
+  <!-- Seção Avaliações com carrossel automático -->
+  <section id="avaliacoes">
+    <h2>O que dizem nossos clientes</h2>
+    <div class="carousel">
+      <div class="avaliacao active">
+        <p>"Simplesmente divino! Cada prato uma obra de arte. Voltarei com certeza!"</p>
+        <strong>- Mariana S.</strong>
+      </div>
+      <div class="avaliacao">
+        <p>"O ambiente é aconchegante e a comida é de outro mundo! Recomendo o filet!"</p>
+        <strong>- João P.</strong>
+      </div>
+      <div class="avaliacao">
+        <p>"Atendimento impecável e sabores incríveis. Me senti em um verdadeiro bistrô europeu."</p>
+        <strong>- Aline R.</strong>
+      </div>
+      <div class="avaliacao">
+        <p>"Uma experiência gastronômica única. O risoto estava perfeito!"</p>
+        <strong>- Carlos M.</strong>
+      </div>
+    </div>
+    <button class="carousel-btn left" aria-label="Anterior" onclick="changeSlide(-1)">&#10094;</button>
+    <button class="carousel-btn right" aria-label="Próximo" onclick="changeSlide(1)">&#10095;</button>
+  </section>
+
   <section id="reserva">
     <h2>Faça Sua Reserva</h2>
     <p>Garanta sua mesa para uma noite inesquecível. Preencha os campos abaixo:</p>
@@ -280,9 +372,43 @@
 
   <footer>
     <p>&copy; 2025 Sabor & Arte. Todos os direitos reservados.
-           <br> Desenvolvido por Hadassa Talita. 
+      <br> Desenvolvido por Hadassa Talita.
     </p>
   </footer>
-  
+
+<script>
+  const avaliacoes = document.querySelectorAll('.avaliacao');
+  let currentIndex = 0;
+  let interval;
+
+  function showSlide(index) {
+    avaliacoes.forEach((av, i) => {
+      av.classList.toggle('active', i === index);
+    });
+  }
+
+  function changeSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = avaliacoes.length - 1;
+    if (currentIndex >= avaliacoes.length) currentIndex = 0;
+    showSlide(currentIndex);
+    resetInterval();
+  }
+
+  function nextSlide() {
+    changeSlide(1);
+  }
+
+  function resetInterval() {
+    clearInterval(interval);
+    interval = setInterval(nextSlide, 5000);
+  }
+
+  // inicia o carrossel automático
+  interval = setInterval(nextSlide, 5000);
+</script>
+
 </body>
 </html>
+
+*https://hadassatalit.github.io/Sabor-e-Arte/*
