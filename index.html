@@ -153,21 +153,49 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+}
 
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-   form label {
-    text-align: left;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-top: 0.5rem;
-    }
+form label {
+  text-align: left;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 0.5rem;
+}
+
+/* Deixa todos os campos com largura total */
+form input,
+form button {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.8rem;
+}
+
+/* Força a aparência consistente de data e hora */
+input[type="date"],
+input[type="time"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: white;
+  color: #333;
+  font-family: inherit;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Ajuste de texto dentro dos campos no iOS */
+input::-webkit-date-and-time-value {
+  text-align: left;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+}
 
     input, textarea, button {
       padding: 0.8rem;
@@ -356,25 +384,27 @@
     <button class="carousel-btn right" aria-label="Próximo" onclick="changeSlide(1)">&#10095;</button>
   </section>
 
-  <section id="reserva">
-    <h2>Faça Sua Reserva</h2>
-    <p>Garanta sua mesa para uma noite inesquecível. Preencha os campos abaixo:</p>
   
-     <form>
-  <label for="nome">Nome</label>
-  <input id="nome" type="text" placeholder="Seu nome" required>
+  <section id="reserva">
+  <h2>Faça Sua Reserva</h2>
+  <p>Garanta sua mesa para uma noite inesquecível. Preencha os campos abaixo:</p>
+  <form>
+    <label for="nome">Nome</label>
+    <input id="nome" type="text" placeholder="Seu nome" required>
 
-  <label for="email">E-mail</label>
-  <input id="email" type="email" placeholder="Seu e-mail" required>
+    <label for="email">E-mail</label>
+    <input id="email" type="email" placeholder="Seu e-mail" required>
 
-  <label for="data">Data da Reserva</label>
-  <input id="data" type="date" required>
+    <label for="data">Data da Reserva</label>
+    <input id="data" type="date" required>
 
-  <label for="hora">Horário da Reserva</label>
-  <input id="hora" type="time" required>
+    <label for="hora">Horário da Reserva</label>
+    <input id="hora" type="time" required>
 
-  <button type="submit">Enviar</button>
-</form>
+    <button type="submit">Enviar</button>
+  </form>
+</section>
+
     
   </section>
 
